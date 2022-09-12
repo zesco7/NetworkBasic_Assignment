@@ -13,12 +13,14 @@ class WebViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var webView: WKWebView!
     
-    var destinationURL: String = "https://www.apple.com" //App Transpot Security Settings(ATSS)
+    var destinationURL: String = "https://www.apple.com"
+    var httpURL: String = "http://www.me.go.kr" //App Transpot Security Settings(ATSS) 적용: http 접속 가능
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        openWebPage(url: destinationURL)
+        openWebPage(url: httpURL)
         searchBar.delegate = self
     }
     
@@ -31,6 +33,22 @@ class WebViewController: UIViewController {
     }
         let request = URLRequest(url: url)
         webView.load(request)
+    }
+    
+    @IBAction func goBackButtonClicked(_ sender: Any) {
+        if webView.canGoBack {
+            webView.goBack()
+        }
+    }
+    
+    @IBAction func reloadButtonClicked(_ sender: Any) {
+        webView.reload()
+    }
+    
+    @IBAction func goForwardButtonClicked(_ sender: Any) {
+        if webView.canGoForward {
+            webView.goForward()
+        }
     }
 }
     
