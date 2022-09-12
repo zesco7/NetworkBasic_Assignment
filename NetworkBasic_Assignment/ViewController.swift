@@ -7,7 +7,19 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, ViewPresentableProtocol {
+    var navigationTitleString: String = ""
+    
+    var backgroundColor: UIColor = .clear
+    
+    func configureView() {
+        print("")
+    }
+    
+    func configureLabel() {
+        print("")
+    }
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()

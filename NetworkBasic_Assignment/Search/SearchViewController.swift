@@ -13,7 +13,11 @@ import UIKit
  
  */
 
-class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SearchViewController: UIViewController, ViewPresentableProtocol, UITableViewDelegate, UITableViewDataSource {
+    var navigationTitleString: String = ""
+    
+    var backgroundColor: UIColor = .clear
+    
     
     @IBOutlet weak var searchTableView: UITableView!
     
@@ -26,6 +30,16 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         //테이블뷰가 사용할 테이블뷰 셀(XIB) 등록: 테이블뷰가 여러개일 수 있으므로 어떤 테이블뷰를 사용할 것인지 연결해줘야함
         searchTableView.register(UINib(nibName: "ListTableViewCell", bundle: nil), forCellReuseIdentifier: ListTableViewCell.identifier)
+    }
+    
+    func configureView() {
+        searchTableView.backgroundColor = .clear
+        searchTableView.separatorColor = .clear
+        searchTableView.rowHeight = 60
+    }
+    
+    func configureLabel() {
+        print("")
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -41,5 +55,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         cell.titleLabel.font = .systemFont(ofSize: 22)
         return cell
     }
+    
+    
     
 }
