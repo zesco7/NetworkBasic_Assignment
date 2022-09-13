@@ -20,6 +20,8 @@
 		98B8D57D28CF41E60026CA0C /* LottoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B8D57C28CF41E60026CA0C /* LottoViewController.swift */; };
 		98B8D57F28CF4DA10026CA0C /* TranslateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B8D57E28CF4DA10026CA0C /* TranslateViewController.swift */; };
 		98B8D58128CF582D0026CA0C /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B8D58028CF582D0026CA0C /* WebViewController.swift */; };
+		98B8D58728D0132F0026CA0C /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B8D58628D0132F0026CA0C /* LocationViewController.swift */; };
+		98B8D58D28D04E1D0026CA0C /* KOTRA LEAP.otf in Resources */ = {isa = PBXBuildFile; fileRef = 98B8D58C28D04E1A0026CA0C /* KOTRA LEAP.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,8 @@
 		98B8D57C28CF41E60026CA0C /* LottoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottoViewController.swift; sourceTree = "<group>"; };
 		98B8D57E28CF4DA10026CA0C /* TranslateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslateViewController.swift; sourceTree = "<group>"; };
 		98B8D58028CF582D0026CA0C /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		98B8D58628D0132F0026CA0C /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
+		98B8D58C28D04E1A0026CA0C /* KOTRA LEAP.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "KOTRA LEAP.otf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,11 +74,13 @@
 		98B8D55E28CF05110026CA0C /* NetworkBasic_Assignment */ = {
 			isa = PBXGroup;
 			children = (
+				98B8D58928D04C450026CA0C /* Resource */,
 				98B8D57928CF334D0026CA0C /* Protocol */,
 				98B8D55F28CF05110026CA0C /* AppDelegate.swift */,
 				98B8D56128CF05110026CA0C /* SceneDelegate.swift */,
 				98B8D56328CF05110026CA0C /* ViewController.swift */,
 				98B8D56528CF05110026CA0C /* Main.storyboard */,
+				98B8D58828D0169A0026CA0C /* Notification */,
 				98B8D58228CF5BA60026CA0C /* Lotto */,
 				98B8D58328CF5BBC0026CA0C /* Translating */,
 				98B8D58428CF5BF10026CA0C /* WebBrowser */,
@@ -126,6 +132,22 @@
 				98B8D57628CF06D60026CA0C /* ListTableViewCell.xib */,
 			);
 			path = Search;
+			sourceTree = "<group>";
+		};
+		98B8D58828D0169A0026CA0C /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				98B8D58628D0132F0026CA0C /* LocationViewController.swift */,
+			);
+			path = Notification;
+			sourceTree = "<group>";
+		};
+		98B8D58928D04C450026CA0C /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				98B8D58C28D04E1A0026CA0C /* KOTRA LEAP.otf */,
+			);
+			path = Resource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -186,6 +208,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				98B8D58D28D04E1D0026CA0C /* KOTRA LEAP.otf in Resources */,
 				98B8D56C28CF05130026CA0C /* LaunchScreen.storyboard in Resources */,
 				98B8D57828CF06D60026CA0C /* ListTableViewCell.xib in Resources */,
 				98B8D56928CF05130026CA0C /* Assets.xcassets in Resources */,
@@ -205,6 +228,7 @@
 				98B8D56028CF05110026CA0C /* AppDelegate.swift in Sources */,
 				98B8D57428CF05620026CA0C /* SearchViewController.swift in Sources */,
 				98B8D57D28CF41E60026CA0C /* LottoViewController.swift in Sources */,
+				98B8D58728D0132F0026CA0C /* LocationViewController.swift in Sources */,
 				98B8D56228CF05110026CA0C /* SceneDelegate.swift in Sources */,
 				98B8D57F28CF4DA10026CA0C /* TranslateViewController.swift in Sources */,
 				98B8D57B28CF33650026CA0C /* ViewPresentableProtocol.swift in Sources */,

@@ -18,6 +18,7 @@ class TranslateViewController: UIViewController {
         super.viewDidLoad()
 
         userInputTextView.text = textViewPlaceholder
+        userInputTextView.font = UIFont(name: "KOTRALEAP", size: 25) //Custom Font 적용
         userInputTextView.textColor = .red
         userInputTextView.delegate = self
         
