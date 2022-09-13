@@ -7,11 +7,25 @@
 
 import UIKit
 
-class LottoViewController: UIViewController {
+import Alamofire
+import SwiftyJSON
 
+
+/*질문
+ -. didSelectRow에서 눌렀을때 회차가 나와야 하는게 아닌지? (numberTextField.text =  "\(lottoList[row])회차")
+ */
+class LottoViewController: UIViewController {
+    //ReuseableViewProtocol, describing 을 사용하여 identifier 등록
+    //static var identifier: String = String(describing: LottoViewController.self)
 
     @IBOutlet weak var numberTextField: UITextField!
-
+    @IBOutlet weak var lottoNumber1: UILabel!
+    @IBOutlet weak var lottoNumber2: UILabel!
+    @IBOutlet weak var lottoNumber3: UILabel!
+    @IBOutlet weak var lottoNumber4: UILabel!
+    @IBOutlet weak var lottoNumber5: UILabel!
+    @IBOutlet weak var lottoNumber6: UILabel!
+    @IBOutlet weak var BonusNumber: UILabel!
     
     var lottoPickerView = UIPickerView() //코드로 UIPickerView구현
     
@@ -22,10 +36,50 @@ class LottoViewController: UIViewController {
         numberTextField.inputView = lottoPickerView
         lottoPickerView.delegate = self
         lottoPickerView.dataSource = self
-
+    
+        requestLotto(number: lottoList.count - 1)
+        
     }
     
+    func lottoLabelAttribute() {
+ 
+    }
     
+    func requestLotto(number: Int) { //로또 회차를 매개변수로 넣어 회차별 데이터 받기
+        //AF에서 success status code: 200~299
+        
+        let url = "https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=\(number)"
+        AF.request(url, method: .get).validate(statusCode: 200..<400).responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                print("JSON: \(json)")
+                
+                let date = json["drwNoDate"].stringValue
+                print(date)
+                
+                let drwtNo1 = json["drwtNo1"].intValue
+                let drwtNo2 = json["drwtNo2"].intValue
+                let drwtNo3 = json["drwtNo3"].intValue
+                let drwtNo4 = json["drwtNo4"].intValue
+                let drwtNo5 = json["drwtNo5"].intValue
+                let drwtNo6 = json["drwtNo6"].intValue
+                let bnusNo = json["bnusNo"].intValue
+                
+                self.numberTextField.text = date
+                self.lottoNumber1.text = "\(drwtNo1)"
+                self.lottoNumber2.text = "\(drwtNo2)"
+                self.lottoNumber3.text = "\(drwtNo3)"
+                self.lottoNumber4.text = "\(drwtNo4)"
+                self.lottoNumber5.text = "\(drwtNo5)"
+                self.lottoNumber6.text = "\(drwtNo6)"
+                self.BonusNumber.text = "\(bnusNo)"
+                
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
 }
 
 extension LottoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
@@ -39,6 +93,7 @@ extension LottoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        requestLotto(number: lottoList[row])
         numberTextField.text =  "\(lottoList[row])회차"
         print(component, row)
     }
