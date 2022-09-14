@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="B8t-Km-0p1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Tql-e8-Mmk">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
@@ -41,6 +41,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="searchBar" destination="NPb-l5-o4z" id="Hij-Bk-x7J"/>
                         <outlet property="searchTableView" destination="OXs-yc-RsW" id="pq2-Xl-Oqj"/>
                     </connections>
                 </viewController>
@@ -133,7 +134,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9f7-fD-t7O" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="28.985507246376812" y="755.35714285714278"/>
+            <point key="canvasLocation" x="29" y="767"/>
         </scene>
         <!--Lotto View Controller-->
         <scene sceneID="PMF-8f-k4P">
@@ -243,7 +244,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="nhZ-Za-e63">
-                                <rect key="frame" x="30" y="386" width="240" height="128"/>
+                                <rect key="frame" x="30" y="251" width="240" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemTealColor"/>
                                 <color key="textColor" systemColor="labelColor"/>
@@ -258,16 +259,19 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rJN-xT-IZd">
-                                <rect key="frame" x="102" y="553" width="97" height="34"/>
+                                <rect key="frame" x="102" y="694" width="97" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DaB-A8-9f2">
-                                <rect key="frame" x="203" y="674" width="67" height="31"/>
+                                <rect key="frame" x="86" y="421" width="73" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="번역하기"/>
+                                <connections>
+                                    <action selector="translationButtonClicked:" destination="Pso-pr-5xU" eventType="touchUpInside" id="NSU-Uz-A7B"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="NC7-aG-Uk2"/>
@@ -279,6 +283,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="translatedTextView" destination="nhZ-Za-e63" id="zOu-Ut-8Tn"/>
+                        <outlet property="translationButton" destination="DaB-A8-9f2" id="zko-H7-QOX"/>
                         <outlet property="userInputTextView" destination="JgK-sD-jNX" id="oD5-Tn-b5e"/>
                     </connections>
                 </viewController>
@@ -392,6 +398,46 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TIz-Fc-8CF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3554" y="79"/>
+        </scene>
+        <!--Beer List View Controller-->
+        <scene sceneID="nni-BO-CU1">
+            <objects>
+                <viewController storyboardIdentifier="BeerListViewController" id="Tql-e8-Mmk" customClass="BeerListViewController" customModule="NetworkBasic_Assignment" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="H3u-yW-ewj">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="b8f-ig-iFL">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="BeerListTableViewCell" id="SZi-eU-EMR" customClass="BeerListTableViewCell" customModule="NetworkBasic_Assignment" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="SZi-eU-EMR" id="29e-ZE-6xZ">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="F2C-lS-Ilg"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="F2C-lS-Ilg" firstAttribute="trailing" secondItem="b8f-ig-iFL" secondAttribute="trailing" id="AHg-Fm-rk6"/>
+                            <constraint firstItem="b8f-ig-iFL" firstAttribute="top" secondItem="F2C-lS-Ilg" secondAttribute="top" id="EzM-Qv-roC"/>
+                            <constraint firstItem="b8f-ig-iFL" firstAttribute="leading" secondItem="F2C-lS-Ilg" secondAttribute="leading" id="JEZ-fU-IpZ"/>
+                            <constraint firstItem="F2C-lS-Ilg" firstAttribute="bottom" secondItem="b8f-ig-iFL" secondAttribute="bottom" id="OLV-e0-0pd"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="beerListTableView" destination="b8f-ig-iFL" id="6RF-Ss-7wr"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pVZ-j5-lJ6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="868" y="767"/>
         </scene>
     </scenes>
     <resources>

@@ -48,7 +48,7 @@ class LottoViewController: UIViewController {
     func requestLotto(number: Int) { //로또 회차를 매개변수로 넣어 회차별 데이터 받기
         //AF에서 success status code: 200~299
         
-        let url = "https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=\(number)"
+        let url = "\(EndPoint.lottoURL)&drwNo=\(number)"
         AF.request(url, method: .get).validate(statusCode: 200..<400).responseJSON { response in
             switch response.result {
             case .success(let value):
@@ -66,6 +66,7 @@ class LottoViewController: UIViewController {
                 let drwtNo6 = json["drwtNo6"].intValue
                 let bnusNo = json["bnusNo"].intValue
                 
+                print("=======1=======")
                 self.numberTextField.text = date
                 self.lottoNumber1.text = "\(drwtNo1)"
                 self.lottoNumber2.text = "\(drwtNo2)"
@@ -94,6 +95,7 @@ extension LottoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         requestLotto(number: lottoList[row])
+        print("=======2=======")
         numberTextField.text =  "\(lottoList[row])회차"
         print(component, row)
     }
