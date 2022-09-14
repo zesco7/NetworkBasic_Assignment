@@ -14,6 +14,13 @@ import SwiftyJSON
 /*질문
  -. didSelectRow에서 눌렀을때 회차가 나와야 하는게 아닌지? (numberTextField.text =  "\(lottoList[row])회차")
  */
+
+/*참고
+ -. 타입추론이 타입어노테이션보다 빠르다고 봐도 됨
+ -. 네트워크 통신에러 대한 대응 필요(서버점검 시 통신에러 등)
+ -. 네트워크 느린 환경으로 테스트 가능: 디바이스 빌드 시 통신 컨디션 조정 가능(시뮬레이터에서도 추가설치하면 가능)
+ */
+
 class LottoViewController: UIViewController {
     //ReuseableViewProtocol, describing 을 사용하여 identifier 등록
     //static var identifier: String = String(describing: LottoViewController.self)
@@ -38,6 +45,13 @@ class LottoViewController: UIViewController {
         lottoPickerView.dataSource = self
     
         requestLotto(number: lottoList.count - 1)
+        
+        //timeIntervalSinceNow, Calendar 사용하여 당일 기준 하루전 데이터 로드
+        let format = DateFormatter()
+        format.dateFormat = "yyyyMMdd" // yyyyMMdd와 YYYYMMdd 차이 체크
+        //let dateResult = Date(timeIntervalSinceNow: -86400) //timeIntervalSinceNow
+        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date()) //Calendar
+        let dateResult = format.string(from: yesterday!)
         
     }
     

@@ -34,6 +34,9 @@
 		98E23C6D28D1E3420007DFAE /* BeerListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E23C6B28D1E3420007DFAE /* BeerListTableViewCell.swift */; };
 		98E23C6E28D1E3420007DFAE /* BeerListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98E23C6C28D1E3420007DFAE /* BeerListTableViewCell.xib */; };
 		98E23C7028D1EC390007DFAE /* BeerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E23C6F28D1EC390007DFAE /* BeerList.swift */; };
+		98E23CA128D20EEA0007DFAE /* ImageSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E23CA028D20EEA0007DFAE /* ImageSearchViewController.swift */; };
+		98E23CA528D2260F0007DFAE /* ImageSearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E23CA328D2260F0007DFAE /* ImageSearchCollectionViewCell.swift */; };
+		98E23CA628D2260F0007DFAE /* ImageSearchCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98E23CA428D2260F0007DFAE /* ImageSearchCollectionViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,6 +66,9 @@
 		98E23C6B28D1E3420007DFAE /* BeerListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeerListTableViewCell.swift; sourceTree = "<group>"; };
 		98E23C6C28D1E3420007DFAE /* BeerListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BeerListTableViewCell.xib; sourceTree = "<group>"; };
 		98E23C6F28D1EC390007DFAE /* BeerList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeerList.swift; sourceTree = "<group>"; };
+		98E23CA028D20EEA0007DFAE /* ImageSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSearchViewController.swift; sourceTree = "<group>"; };
+		98E23CA328D2260F0007DFAE /* ImageSearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSearchCollectionViewCell.swift; sourceTree = "<group>"; };
+		98E23CA428D2260F0007DFAE /* ImageSearchCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageSearchCollectionViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +104,7 @@
 		98B8D55E28CF05110026CA0C /* NetworkBasic_Assignment */ = {
 			isa = PBXGroup;
 			children = (
+				98E23CA228D2124E0007DFAE /* ImageSearch */,
 				98CC594128D0CAC800212922 /* Beer */,
 				98CC593628D0806900212922 /* Constant */,
 				98B8D58928D04C450026CA0C /* Resource */,
@@ -199,6 +206,16 @@
 			path = Beer;
 			sourceTree = "<group>";
 		};
+		98E23CA228D2124E0007DFAE /* ImageSearch */ = {
+			isa = PBXGroup;
+			children = (
+				98E23CA028D20EEA0007DFAE /* ImageSearchViewController.swift */,
+				98E23CA328D2260F0007DFAE /* ImageSearchCollectionViewCell.swift */,
+				98E23CA428D2260F0007DFAE /* ImageSearchCollectionViewCell.xib */,
+			);
+			path = ImageSearch;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -272,6 +289,7 @@
 				98B8D57828CF06D60026CA0C /* ListTableViewCell.xib in Resources */,
 				98E23C6E28D1E3420007DFAE /* BeerListTableViewCell.xib in Resources */,
 				98B8D56928CF05130026CA0C /* Assets.xcassets in Resources */,
+				98E23CA628D2260F0007DFAE /* ImageSearchCollectionViewCell.xib in Resources */,
 				98B8D56728CF05110026CA0C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -300,6 +318,8 @@
 				98B8D57B28CF33650026CA0C /* ViewPresentableProtocol.swift in Sources */,
 				98B8D57728CF06D60026CA0C /* ListTableViewCell.swift in Sources */,
 				98CC593828D0807C00212922 /* Constant.swift in Sources */,
+				98E23CA128D20EEA0007DFAE /* ImageSearchViewController.swift in Sources */,
+				98E23CA528D2260F0007DFAE /* ImageSearchCollectionViewCell.swift in Sources */,
 				98E23C6D28D1E3420007DFAE /* BeerListTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

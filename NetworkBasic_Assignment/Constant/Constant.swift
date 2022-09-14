@@ -14,9 +14,10 @@ struct APIKey {
 }
 
 struct EndPoint {
-    static var boxOfficeURL =  "http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?"
-    static var lottoURL = "https://www.dhlottery.co.kr/common.do?method=getLottoNumber"
-    static var translatorURL = "https://openapi.naver.com/v1/papago/n2mt"
+    static let boxOfficeURL =  "http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?"
+    static let lottoURL = "https://www.dhlottery.co.kr/common.do?method=getLottoNumber"
+    static let translatorURL = "https://openapi.naver.com/v1/papago/n2mt"
+    static let ImageSearchURL =  "https://openapi.naver.com/v1/search/book.json?"
 }
 
 
