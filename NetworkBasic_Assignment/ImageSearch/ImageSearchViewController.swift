@@ -12,8 +12,8 @@ import Kingfisher
 import SwiftyJSON
 
 /*질문
- -. 네트워크 통신에서 반복문 사용하여 값을 bookImageArray를 배열형태로 저장하려는데 json에서 접근하는 방법을 모르겠음(딕셔너리랑 뭐가 다른건지?)
- -. bookImageArray에 데이터를 저장했다 치고 저장된 데이터를 킹피셔로 콜렉션뷰셀마다 보여주는 방법을 모르겠음(indexpath를 사용해서 셀마다 데이터를 보여주려면 cellForItemAt에서 처리해야 되는데 배열안에 있는 이미지주소 string을 어떻게 넣어줘야하는지?)
+ -. 네트워크 통신에서 반복문 사용하여 값을 bookImageArray를 배열형태로 저장하려는데 json에서 접근하는 방법을 모르겠음(딕셔너리랑 뭐가 다른건지?) -> 해결: insomenia에서 json구조 잘확인해서 반복문처리
+ -. bookImageArray에 데이터를 저장했다 치고 저장된 데이터를 킹피셔로 콜렉션뷰셀마다 보여주는 방법을 모르겠음(indexpath를 사용해서 셀마다 데이터를 보여주려면 cellForItemAt에서 처리해야 되는데 배열안에 있는 이미지주소 string을 어떻게 넣어줘야하는지?) -> 해결: cell마다 indexPath에 맞는 데이터 받을 수 있도록 url변수 선언 + 킹피셔 사용법 숙지 
  */
 
 class ImageSearchViewController: UIViewController {
@@ -27,8 +27,8 @@ class ImageSearchViewController: UIViewController {
         
         let layout = UICollectionViewFlowLayout()
         let spacing : CGFloat = 8
-        let width = UIScreen.main.bounds.width - (spacing * 4)
-        layout.itemSize = CGSize(width: width / 2, height: 150)
+        let width = UIScreen.main.bounds.width
+        layout.itemSize = CGSize(width: width, height: 150)
         layout.scrollDirection = .vertical
         layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
         layout.minimumLineSpacing = spacing
@@ -36,6 +36,7 @@ class ImageSearchViewController: UIViewController {
         imageSearchCollectionView.collectionViewLayout = layout
     
         fetchImage()
+        print("========fetch========")
         imageSearchCollectionView.delegate = self
         imageSearchCollectionView.dataSource = self
         imageSearchCollectionView.register(UINib(nibName: "ImageSearchCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: ImageSearchCollectionViewCell.identifier)
@@ -55,21 +56,19 @@ class ImageSearchViewController: UIViewController {
                 let json = JSON(value)
                 print("JSON: \(json)")
                
-                for book in json["items"].arrayValue {
-                let image = json["image"].stringValue
+                for book in json["items"].arrayValue { //["items"] 안에 있는 배열count만큼(book) 반복문 실행
+                let image = book["image"].stringValue
                     self.bookImageArray.append(image)
                 }
                 print(self.bookImageArray)
-                
-                //let bookImageURL = URL(string: image)
-                //self.bookImageView.kf.setImage(with: bookImageURL)
-                
+                print("========reload========")
+                imageSearchCollectionView.reloadData()
+            
             case .failure(let error):
                 print(error)
             }
         }
     }
-
 }
 
 extension ImageSearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -79,9 +78,9 @@ extension ImageSearchViewController: UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageSearchCollectionViewCell.identifier, for: indexPath) as? ImageSearchCollectionViewCell else { return UICollectionViewCell() }
-        
-        
-        //cell.bookImageView.image = bookImageArray[indexPath.item]
+        print("========cellForItemAt========")
+        let url = URL(string: bookImageArray[indexPath.item]) //indexPath에 해당하는 이미지url을 URL타입처리해서 킹피셔로 이미지 로드
+        cell.bookImageView.kf.setImage(with: url)
         
         return cell
     }

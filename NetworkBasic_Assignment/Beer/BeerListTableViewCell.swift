@@ -14,6 +14,11 @@ class BeerListTableViewCell: UITableViewCell {
     @IBOutlet weak var beerListNameLabel: UILabel!
     @IBOutlet weak var beerListIntroLabel: UILabel!
     
+    func configureCell() {
+        beerListNameLabel.textAlignment = .center
+        beerListIntroLabel.numberOfLines = 0
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
