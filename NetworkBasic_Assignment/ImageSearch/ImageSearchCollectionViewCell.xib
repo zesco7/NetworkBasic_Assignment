@@ -16,13 +16,18 @@
                 <rect key="frame" x="0.0" y="0.0" width="294" height="222"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8OK-i2-q6r">
-                        <rect key="frame" x="27" y="20" width="240" height="128"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8OK-i2-q6r">
+                        <rect key="frame" x="0.0" y="0.0" width="294" height="222"/>
                     </imageView>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="8OK-i2-q6r" secondAttribute="trailing" id="3e8-rY-Up5"/>
+                <constraint firstItem="8OK-i2-q6r" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="7oJ-B1-Rr1"/>
+                <constraint firstItem="8OK-i2-q6r" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Vu4-fZ-4kp"/>
+                <constraint firstAttribute="bottom" secondItem="8OK-i2-q6r" secondAttribute="bottom" id="tsT-bS-y2z"/>
+            </constraints>
             <size key="customSize" width="294" height="222"/>
             <connections>
                 <outlet property="bookImageView" destination="8OK-i2-q6r" id="xM4-uI-Bla"/>

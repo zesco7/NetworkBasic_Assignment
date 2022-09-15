@@ -8,12 +8,19 @@
 import UIKit
 
 import Alamofire
+import JGProgressHUD
 import SwiftyJSON
 
 /*포인트
  -. superview가 UIViewController이므로 UITableViewDelegate, UITableViewDataSource에 더해 UIViewController extension도 사용할 수 있음.
  -. delegate, datasource 연결, XIB등록
  
+ */
+
+/*JGProgressHUD
+ -. 네트워크 통신 시작할 때 로딩바 표시
+ -. 네트워크 통신 종료, 데이터 리로드 후 dismiss처리
+ -. dismiss는 네트워크 통신 과정에서 해야함
  */
 
 class SearchViewController: UIViewController, ViewPresentableProtocol, UITableViewDelegate, UITableViewDataSource {
@@ -23,6 +30,7 @@ class SearchViewController: UIViewController, ViewPresentableProtocol, UITableVi
     
     //BoxOffice배열 생성
     var list : [BoxOfficeModel] = []
+    let hud = JGProgressHUD() //JGProgressHUD 인스턴스생성
     
     @IBOutlet weak var searchTableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -55,9 +63,12 @@ class SearchViewController: UIViewController, ViewPresentableProtocol, UITableVi
     
     func requestBoxOffice(date: String) {
         
+        hud.show(in: view) //네트워크 통신 시작할 때 로딩바 표시
+        
         //list.removeAll() //배열데이터삭제 가능시점1
-        let url = "\(EndPoint.boxOfficeURL)key=\(APIKey.BOXOFFICE)&targetDt=\(date)" 
-        AF.request(url, method: .get).validate( ).responseJSON { response in
+        let url = "\(EndPoint.boxOfficeURL)key=\(APIKey.BOXOFFICE)&targetDt=\(date)"
+        //responseJSON -> responseData
+        AF.request(url, method: .get).validate( ).responseData { response in
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
@@ -86,10 +97,12 @@ class SearchViewController: UIViewController, ViewPresentableProtocol, UITableVi
                 print(self.list)
                 
                 self.searchTableView.reloadData() //처음에는 빈 배열이므로 배열데이터를 갱신해주어야 화면에 표시됨
+                self.hud.dismiss()
                 
             case .failure(let error):
                 print(error)
             }
+            //self.hud.dismiss() //여기에서 dismiss하면 안됨. 네트워크통신은 데이터요청 후 다음코드를 실행해버리기 때문에 영화목록 뜨기전에 로딩바 사라질것임.
         }
     }
     
