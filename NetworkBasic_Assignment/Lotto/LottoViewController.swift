@@ -13,6 +13,7 @@ import SwiftyJSON
 
 /*질문
  -. didSelectRow에서 눌렀을때 회차가 나와야 하는게 아닌지? (numberTextField.text =  "\(lottoList[row])회차")
+ -. 빈배열에 기존 검색회차 목록을 만들었을때 처음누른것과 아닌 것을 어떻게 구분하는지? 미검색회차 눌렀다 기존검색회차 눌렀을때 배열처리 어려움.
  */
 
 /*참고
@@ -37,6 +38,10 @@ class LottoViewController: UIViewController {
     var lottoPickerView = UIPickerView() //코드로 UIPickerView구현
     
     var lottoList: [Int] = Array(0...1025).reversed()
+    var lottoRoundSearchedList = [Int]()
+    var lottoNumberSearchedList = [Int]()
+    var zeroList = [Int]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         numberTextField.tintColor = .clear //프롬프터 색상 제거
@@ -108,10 +113,24 @@ extension LottoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        requestLotto(number: lottoList[row])
+        UserDefaults.standard.set(lottoList[row], forKey: "lottoRoundSearchedList") //검색된 로또회차 정보 저장
+        let lottoRoundSearched = UserDefaults.standard.integer(forKey: "lottoRoundSearchedList")
+        lottoRoundSearchedList.append(lottoRoundSearched)
+        
+        if lottoRoundSearchedList.contains(lottoList[row]) == true {
+            //requestLotto(number: lottoList[row])
+            print(true)
+        } else if lottoRoundSearchedList.contains(lottoList[row]) == false {
+            requestLotto(number: lottoList[row])
+            print(false)
+        } else {
+
+        }
+        
         print("=======2=======")
         numberTextField.text =  "\(lottoList[row])회차"
-        print(component, row)
+        //print(component, row)
+        print(lottoRoundSearchedList)
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {

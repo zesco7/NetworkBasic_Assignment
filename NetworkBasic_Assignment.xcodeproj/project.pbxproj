@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		983EF1A728D195E700788BF3 /* BoxOfficeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983EF1A628D195E700788BF3 /* BoxOfficeModel.swift */; };
+		98B621DF28D44D61004FE826 /* ImageSearchAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B621DE28D44D61004FE826 /* ImageSearchAPIManager.swift */; };
 		98B8D56028CF05110026CA0C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B8D55F28CF05110026CA0C /* AppDelegate.swift */; };
 		98B8D56228CF05110026CA0C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B8D56128CF05110026CA0C /* SceneDelegate.swift */; };
 		98B8D56428CF05110026CA0C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B8D56328CF05110026CA0C /* ViewController.swift */; };
@@ -42,6 +43,7 @@
 
 /* Begin PBXFileReference section */
 		983EF1A628D195E700788BF3 /* BoxOfficeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxOfficeModel.swift; sourceTree = "<group>"; };
+		98B621DE28D44D61004FE826 /* ImageSearchAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSearchAPIManager.swift; sourceTree = "<group>"; };
 		98B8D55C28CF05110026CA0C /* NetworkBasic_Assignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NetworkBasic_Assignment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98B8D55F28CF05110026CA0C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		98B8D56128CF05110026CA0C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -87,6 +89,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		98B621DD28D44D31004FE826 /* APIManager */ = {
+			isa = PBXGroup;
+			children = (
+				98B621DE28D44D61004FE826 /* ImageSearchAPIManager.swift */,
+			);
+			path = APIManager;
+			sourceTree = "<group>";
+		};
 		98B8D55328CF05110026CA0C = {
 			isa = PBXGroup;
 			children = (
@@ -106,23 +116,24 @@
 		98B8D55E28CF05110026CA0C /* NetworkBasic_Assignment */ = {
 			isa = PBXGroup;
 			children = (
-				98E23CA228D2124E0007DFAE /* ImageSearch */,
-				98CC594128D0CAC800212922 /* Beer */,
-				98CC593628D0806900212922 /* Constant */,
-				98B8D58928D04C450026CA0C /* Resource */,
-				98B8D57928CF334D0026CA0C /* Protocol */,
+				98B8D56D28CF05130026CA0C /* Info.plist */,
+				98B8D56A28CF05130026CA0C /* LaunchScreen.storyboard */,
+				98B8D56528CF05110026CA0C /* Main.storyboard */,
 				98B8D55F28CF05110026CA0C /* AppDelegate.swift */,
 				98B8D56128CF05110026CA0C /* SceneDelegate.swift */,
 				98B8D56328CF05110026CA0C /* ViewController.swift */,
-				98B8D56528CF05110026CA0C /* Main.storyboard */,
-				98B8D58828D0169A0026CA0C /* Notification */,
+				98B8D56828CF05130026CA0C /* Assets.xcassets */,
+				98B621DD28D44D31004FE826 /* APIManager */,
+				98CC594128D0CAC800212922 /* Beer */,
+				98CC593628D0806900212922 /* Constant */,
+				98E23CA228D2124E0007DFAE /* ImageSearch */,
 				98B8D58228CF5BA60026CA0C /* Lotto */,
+				98B8D58828D0169A0026CA0C /* Notification */,
+				98B8D57928CF334D0026CA0C /* Protocol */,
+				98B8D58928D04C450026CA0C /* Resource */,
+				98B8D58528CF5C410026CA0C /* Search */,
 				98B8D58328CF5BBC0026CA0C /* Translate */,
 				98B8D58428CF5BF10026CA0C /* WebBrowser */,
-				98B8D58528CF5C410026CA0C /* Search */,
-				98B8D56828CF05130026CA0C /* Assets.xcassets */,
-				98B8D56A28CF05130026CA0C /* LaunchScreen.storyboard */,
-				98B8D56D28CF05130026CA0C /* Info.plist */,
 			);
 			path = NetworkBasic_Assignment;
 			sourceTree = "<group>";
@@ -306,6 +317,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				98E23C6A28D1E3190007DFAE /* BeerListViewController.swift in Sources */,
+				98B621DF28D44D61004FE826 /* ImageSearchAPIManager.swift in Sources */,
 				98B8D56428CF05110026CA0C /* ViewController.swift in Sources */,
 				98CC593A28D0A76000212922 /* UserDefaultsHelper.swift in Sources */,
 				98CC594328D0CAD900212922 /* BeerViewController.swift in Sources */,
