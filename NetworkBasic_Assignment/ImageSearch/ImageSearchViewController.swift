@@ -30,8 +30,7 @@ class ImageSearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
+    
         let layout = UICollectionViewFlowLayout()
         let spacing : CGFloat = 8
         let width = UIScreen.main.bounds.width - (spacing * 4)
@@ -52,33 +51,14 @@ class ImageSearchViewController: UIViewController {
     
     //fetchImage, requestImage, callRequestImage 등 서버의 response에 따라 함수명을 정해주는 편임.
     func fetchImage(query: String) {
-        
-        //쿼리값 타입이 한글은 안되는 이유? : 요청변수를 UTF-8로 인코딩한 값인데 한글은 인코딩을 따로 해줘야함
-        //한글을 UTF-8로 인코딩 해줌(url내에 있는 한글을 인식해서 인코딩해준다고 생각하면 됨)
-        let text = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)! //텍스트는 String?타입이므로 언래핑해줌
-        let url = EndPoint.ImageSearchURL + "query=\(text)&display=30&start=1"
-        let header : HTTPHeaders = ["X-Naver-Client-Id": APIKey.NAVER_ID, "X-Naver-Client-Secret": APIKey.NAVER_SECRET]
-        AF.request(url, method: .get, headers: header).validate(statusCode: 200..<400).responseJSON { [self] response in
-            switch response.result {
-            case .success(let value):
-                let json = JSON(value)
-                print("JSON: \(json)")
-                
-                self.totalCount = json["total"].intValue
-                
-                for book in json["items"].arrayValue { //["items"] 안에 있는 배열count만큼(book) 반복문 실행
-                    let image = book["image"].stringValue
-                    self.bookImageArray.append(image)
-                }
-                print(self.bookImageArray)
-                print("========reload========")
-                imageSearchCollectionView.reloadData()
-                
-            case .failure(let error):
-                print(error)
-            }
+        ImageSearchAPIManager.shared.fetchImageData(query: query, startPage: startPage) { totalCount, bookImageArray in
+            
+            //클로저를 통해 fetchImageData에서 인자로 받은 totalCount, bookImageArray를 배열에 넣어줌
+            self.totalCount = totalCount
+            self.bookImageArray = bookImageArray
+            self.imageSearchCollectionView.reloadData()
         }
-    }
+}
 }
 
 extension ImageSearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {

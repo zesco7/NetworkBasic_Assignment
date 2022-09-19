@@ -23,12 +23,11 @@ import SwiftyJSON
  
  
  */
-/*
+
 class ImageSearchAPIManager {
     static var shared = ImageSearchAPIManager()
     
-    func fetchImageData(query: String, startPage: Int, completionHandler: (Int, [String]) -> Void) {
-        
+    func fetchImageData(query: String, startPage: Int, completionHandler: @escaping (Int, [String]) -> Void) {
         
         let text = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)! //텍스트는 String?타입이므로 언래핑해줌
         let url = EndPoint.ImageSearchURL + "query=\(text)&display=30&start=1"
@@ -39,18 +38,16 @@ class ImageSearchAPIManager {
                 let json = JSON(value)
                 print("JSON: \(json)")
                 
-                self.totalCount = json["total"].intValue //1
+                let totalCount = json["total"].intValue
                 
-                for book in json["items"].arrayValue { //["items"] 안에 있는 배열count만큼(book) 반복문 실행
-                    let image = book["image"].stringValue
-                    self.bookImageArray.append(image)
-                }
-                print(self.bookImageArray)
+//                for book in json["items"].arrayValue { //["items"] 안에 있는 배열count만큼(book) 반복문 실행
+//                    let image = book["image"].stringValue
+//                    self.bookImageArray.append(image)
+//                }
                 
-                let newResult = json["items"].arrayValue.map { $0["link"].stringValue }
-                self.list.append(contentsOf: newResult)
+                let bookImageArray = json["items"].arrayValue.map { $0["link"].stringValue }
                 
-                completionHandler
+                completionHandler(totalCount, bookImageArray)
                 
             case .failure(let error):
                 print(error)
@@ -58,4 +55,4 @@ class ImageSearchAPIManager {
         }
     }
 }
-*/
+

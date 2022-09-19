@@ -117,15 +117,16 @@ extension LottoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         let lottoRoundSearched = UserDefaults.standard.integer(forKey: "lottoRoundSearchedList")
         lottoRoundSearchedList.append(lottoRoundSearched)
         
-        if lottoRoundSearchedList.contains(lottoList[row]) == true {
-            //requestLotto(number: lottoList[row])
-            print(true)
-        } else if lottoRoundSearchedList.contains(lottoList[row]) == false {
-            requestLotto(number: lottoList[row])
-            print(false)
-        } else {
-
-        }
+        requestLotto(number: lottoList[row])
+//        if lottoRoundSearchedList.contains(lottoList[row]) == true {
+//            //requestLotto(number: lottoList[row])
+//            print(true)
+//        } else if lottoRoundSearchedList.contains(lottoList[row]) == false {
+//            requestLotto(number: lottoList[row])
+//            print(false)
+//        } else {
+//
+//        }
         
         print("=======2=======")
         numberTextField.text =  "\(lottoList[row])회차"
