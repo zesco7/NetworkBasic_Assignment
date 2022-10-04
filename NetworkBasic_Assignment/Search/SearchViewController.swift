@@ -25,9 +25,8 @@ import RealmSwift
  */
 
 /*질문
- -.검색기록 여부를 어떻게 구분하는지? 빈배열 만들어서 append해도 검색때마다 append되어서 분기처리 안됨
+ -.검색기록 여부를 어떻게 구분하는지? 빈배열 만들어서 append해도 검색때마다 append되어서 분기처리 안됨 -> 해결: realm테이블 내 데이터 유무로 분기
  -.검색기록있어서 네트워크통신안할때 어떻게 Realm테이블 값에 접근하는지? row가 여러개인경우 재사용셀 데이터 표시때문에 인덱싱까지해야하는데 searchBarSearchButtonClicked에서 접근할 수 있나?
- 
  */
 
 class SearchViewController: UIViewController, ViewPresentableProtocol, UITableViewDelegate, UITableViewDataSource {
@@ -167,7 +166,7 @@ class SearchViewController: UIViewController, ViewPresentableProtocol, UITableVi
                 as? ListTableViewCell else { return UITableViewCell() }
 
         cell.backgroundColor = .clear
-        cell.titleLabel.text = "\(list[indexPath.row].movieTitle)(\(list[indexPath.row].releaseDate)): 총 \(list[indexPath.row].totalCount)명"
+        cell.titleLabel.text = "\(dailyBoxOfficeArray[indexPath.row].movieName)(\(dailyBoxOfficeArray[indexPath.row].openDate)): 총 \(dailyBoxOfficeArray[indexPath.row].audienceAcc)명"
         cell.titleLabel.font = .systemFont(ofSize: 22)
         self.tag = indexPath.row
         
@@ -180,20 +179,12 @@ extension SearchViewController: UISearchBarDelegate {
         dailyBoxOfficeArray = localRealm.objects(DailyBoxOffice.self).sorted(byKeyPath: "searchingDate", ascending: false)
         
         let tvcell = ListTableViewCell()
-
-        /*
-        if 검색기록X {
-         requestBoxOffice(date: searchBar.text!) //네트워크 통신으로 받은 데이터 표시
-         } 검색기록O {
-         //Realm에 저장된 데이터 표시
-         }
-         */
         
-        
-//        if searchBarTextArray.contains(searchBar.text!) {
-//            tvcell.titleLabel.text = "\(dailyBoxOfficeArray[indexPath.row].movieName)(\(dailyBoxOfficeArray[indexPath.row].openDate)): 총 \(dailyBoxOfficeArray[indexPath.row].audienceAcc)명"
-//        } else {
-//            requestBoxOffice(date: searchBar.text!)
-//        }
+        //realm데이터 유무 기준으로 네트워크통신 분기
+        if localRealm.objects(DailyBoxOffice.self).filter("searchingDate CONTAINS \(searchBar.text!)") == nil {
+            requestBoxOffice(date: searchBar.text!) //검색기록 없으면 네트워크 요청
+        } else {
+            tvcell.titleLabel.text = //검색기록 있으면 realm데이터 로드
+        }
     }
 }
