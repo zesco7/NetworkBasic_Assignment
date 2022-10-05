@@ -97,14 +97,14 @@ class SearchViewController: UIViewController, ViewPresentableProtocol, UITableVi
                 
                 //BoxOffice배열 개별추가
                 /*
-                let movieNm1 = json["boxOfficeResult"]["dailyBoxOfficeList"][0]["movieNm"].stringValue
-                let movieNm2 = json["boxOfficeResult"]["dailyBoxOfficeList"][1]["movieNm"].stringValue
-                let movieNm3 = json["boxOfficeResult"]["dailyBoxOfficeList"][2]["movieNm"].stringValue
-        
-                self.list.append(movieNm1)
-                self.list.append(movieNm2)
-                self.list.append(movieNm3)
-                print(self.list)
+                 let movieNm1 = json["boxOfficeResult"]["dailyBoxOfficeList"][0]["movieNm"].stringValue
+                 let movieNm2 = json["boxOfficeResult"]["dailyBoxOfficeList"][1]["movieNm"].stringValue
+                 let movieNm3 = json["boxOfficeResult"]["dailyBoxOfficeList"][2]["movieNm"].stringValue
+                 
+                 self.list.append(movieNm1)
+                 self.list.append(movieNm2)
+                 self.list.append(movieNm3)
+                 print(self.list)
                  */
                 self.list.removeAll() //배열데이터삭제 가능시점2
                 
@@ -146,11 +146,11 @@ class SearchViewController: UIViewController, ViewPresentableProtocol, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ListTableViewCell.identifier, for: indexPath)
                 as? ListTableViewCell else { return UITableViewCell() }
-
+        
         cell.backgroundColor = .clear
         cell.titleLabel.text = "\(list[indexPath.row].movieTitle)(\(list[indexPath.row].releaseDate)): 총 \(list[indexPath.row].totalCount)명"
         
-//        cell.titleLabel.text = "\(dailyBoxOfficeArray[indexPath.row].movieName)(\(dailyBoxOfficeArray[indexPath.row].openDate)): 총 \(dailyBoxOfficeArray[indexPath.row].audienceAcc)명"
+        //        cell.titleLabel.text = "\(dailyBoxOfficeArray[indexPath.row].movieName)(\(dailyBoxOfficeArray[indexPath.row].openDate)): 총 \(dailyBoxOfficeArray[indexPath.row].audienceAcc)명"
         cell.titleLabel.font = .systemFont(ofSize: 22)
         self.tag = indexPath.row
         
@@ -160,10 +160,9 @@ class SearchViewController: UIViewController, ViewPresentableProtocol, UITableVi
 
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-
-        dailyBoxOfficeArray = localRealm.objects(DailyBoxOffice.self).sorted(byKeyPath: "movieName", ascending: true)
-//        dailyBoxOfficeArray = localRealm.objects(DailyBoxOffice.self).filter("searchingDate CONTAINS '20200801'")
-//        print("result: ",dailyBoxOfficeArray)
+        
+        dailyBoxOfficeArray = localRealm.objects(DailyBoxOffice.self).filter("searchingDate CONTAINS '\(searchBar.text!)'")
+        print("result: ",dailyBoxOfficeArray!)
         
         //realm데이터 유무 기준으로 네트워크통신 분기
         if dailyBoxOfficeArray.count == 0 { //검색기록 없으면 네트워크 요청: 네트워크 요청시 list에는 새로 검색한 날짜데이터만, dailyBoxOfficeArray에는 누적데이터 저장됨.
@@ -171,8 +170,9 @@ extension SearchViewController: UISearchBarDelegate {
             print("Network Request")
         } else {
             list.removeAll()
-            for i in dailyBoxOfficeArray { //검색기록 있으면 네트워크요청하지 않고 기존 list데이터 삭제한뒤 realm데이터를 list에 넣어서 불러오기
+            for i in dailyBoxOfficeArray { //검색기록 있으면 네트워크 요청X: 기존 list데이터 삭제한뒤, realm데이터를 list에 넣어서 불러오고, reloadData하여 새로운 데이터 화면에 표시
                 list.append(BoxOfficeModel(movieTitle: i.movieName, releaseDate: i.openDate, totalCount: i.audienceAcc))
+                searchTableView.reloadData()
                 print("No Network Request")
             }
         }
