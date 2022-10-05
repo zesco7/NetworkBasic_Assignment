@@ -15,7 +15,9 @@ import RealmSwift
 /*포인트
  -. superview가 UIViewController이므로 UITableViewDelegate, UITableViewDataSource에 더해 UIViewController extension도 사용할 수 있음.
  -. delegate, datasource 연결, XIB등록
- 
+ -. 레코드 추가시 반복문 처리: list[i].movieTitle (X)-> i.movieTitle (O)
+ -. realm필터 적용시 string interpolation 적용: localRealm.objects(DailyBoxOffice.self).filter("searchingDate CONTAINS '\(searchBar.text!)'")
+ -. 검색기록 있으면 네트워크 요청X: 1)인덱싱하려면 기존데이터 삭제 필요, 2)list배열에 맞는 타입을 값으로 넣기(BoxOfficeModel), 3)새로운 화면 표시하려면 reloadData 필요.
  */
 
 /*JGProgressHUD
