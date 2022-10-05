@@ -69,8 +69,7 @@ class SearchViewController: UIViewController, ViewPresentableProtocol, UITableVi
         //requestBoxOffice(date: searchBar.text!)
         
         print("Realm is located at:", localRealm.configuration.fileURL!)
-        //localRealm.objects(DailyBoxOffice.self).sorted(by: <#T##(DailyBoxOffice, DailyBoxOffice) throws -> Bool#>)
-       
+        
     }
     
     func configureView() {
@@ -116,7 +115,7 @@ class SearchViewController: UIViewController, ViewPresentableProtocol, UITableVi
                     let audiAcc = movie["audiAcc"].stringValue
                     self.list.append(BoxOfficeModel(movieTitle: movieNm, releaseDate: openDt, totalCount: audiAcc))
                 }
-                print(self.list)
+                //print(self.list)
                 
                 realmDataSetup()
                 self.searchTableView.reloadData() //처음에는 빈 배열이므로 배열데이터를 갱신해주어야 화면에 표시됨
@@ -131,29 +130,12 @@ class SearchViewController: UIViewController, ViewPresentableProtocol, UITableVi
     
     func realmDataSetup() {
         //Realm2. 레코드 생성, 추가
-        let data = DailyBoxOffice(movieName: list[0].movieTitle, openDate: list[0].releaseDate, audienceAcc: list[0].totalCount, searchingDate: searchBar.text!)
-        let data2 = DailyBoxOffice(movieName: list[1].movieTitle, openDate: list[1].releaseDate, audienceAcc: list[1].totalCount, searchingDate: searchBar.text!)
-        let data3 = DailyBoxOffice(movieName: list[2].movieTitle, openDate: list[2].releaseDate, audienceAcc: list[2].totalCount, searchingDate: searchBar.text!)
-        let data4 = DailyBoxOffice(movieName: list[3].movieTitle, openDate: list[3].releaseDate, audienceAcc: list[3].totalCount, searchingDate: searchBar.text!)
-        let data5 = DailyBoxOffice(movieName: list[4].movieTitle, openDate: list[4].releaseDate, audienceAcc: list[4].totalCount, searchingDate: searchBar.text!)
-        let data6 = DailyBoxOffice(movieName: list[5].movieTitle, openDate: list[5].releaseDate, audienceAcc: list[5].totalCount, searchingDate: searchBar.text!)
-        let data7 = DailyBoxOffice(movieName: list[6].movieTitle, openDate: list[6].releaseDate, audienceAcc: list[6].totalCount, searchingDate: searchBar.text!)
-        let data8 = DailyBoxOffice(movieName: list[7].movieTitle, openDate: list[7].releaseDate, audienceAcc: list[7].totalCount, searchingDate: searchBar.text!)
-        let data9 = DailyBoxOffice(movieName: list[8].movieTitle, openDate: list[8].releaseDate, audienceAcc: list[8].totalCount, searchingDate: searchBar.text!)
-        let data10 = DailyBoxOffice(movieName: list[9].movieTitle, openDate: list[9].releaseDate, audienceAcc: list[9].totalCount, searchingDate: searchBar.text!)
-
-        try! localRealm.write {
-            localRealm.add(data)
-            localRealm.add(data2)
-            localRealm.add(data3)
-            localRealm.add(data4)
-            localRealm.add(data5)
-            localRealm.add(data6)
-            localRealm.add(data7)
-            localRealm.add(data8)
-            localRealm.add(data9)
-            localRealm.add(data10)
-            print("Realm Succeess")
+        for i in list {
+            let data = DailyBoxOffice(movieName: i.movieTitle, openDate: i.releaseDate, audienceAcc: i.totalCount, searchingDate: searchBar.text!)
+            try! localRealm.write {
+                localRealm.add(data)
+                print("Realm Succeess")
+            }
         }
     }
     
@@ -166,7 +148,9 @@ class SearchViewController: UIViewController, ViewPresentableProtocol, UITableVi
                 as? ListTableViewCell else { return UITableViewCell() }
 
         cell.backgroundColor = .clear
-        cell.titleLabel.text = "\(dailyBoxOfficeArray[indexPath.row].movieName)(\(dailyBoxOfficeArray[indexPath.row].openDate)): 총 \(dailyBoxOfficeArray[indexPath.row].audienceAcc)명"
+        cell.titleLabel.text = "\(list[indexPath.row].movieTitle)(\(list[indexPath.row].releaseDate)): 총 \(list[indexPath.row].totalCount)명"
+        
+//        cell.titleLabel.text = "\(dailyBoxOfficeArray[indexPath.row].movieName)(\(dailyBoxOfficeArray[indexPath.row].openDate)): 총 \(dailyBoxOfficeArray[indexPath.row].audienceAcc)명"
         cell.titleLabel.font = .systemFont(ofSize: 22)
         self.tag = indexPath.row
         
@@ -176,15 +160,21 @@ class SearchViewController: UIViewController, ViewPresentableProtocol, UITableVi
 
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        dailyBoxOfficeArray = localRealm.objects(DailyBoxOffice.self).sorted(byKeyPath: "searchingDate", ascending: false)
-        
-        let tvcell = ListTableViewCell()
+
+        dailyBoxOfficeArray = localRealm.objects(DailyBoxOffice.self).sorted(byKeyPath: "movieName", ascending: true)
+//        dailyBoxOfficeArray = localRealm.objects(DailyBoxOffice.self).filter("searchingDate CONTAINS '20200801'")
+//        print("result: ",dailyBoxOfficeArray)
         
         //realm데이터 유무 기준으로 네트워크통신 분기
-        if localRealm.objects(DailyBoxOffice.self).filter("searchingDate CONTAINS \(searchBar.text!)") == nil {
-            requestBoxOffice(date: searchBar.text!) //검색기록 없으면 네트워크 요청
+        if dailyBoxOfficeArray.count == 0 { //검색기록 없으면 네트워크 요청: 네트워크 요청시 list에는 새로 검색한 날짜데이터만, dailyBoxOfficeArray에는 누적데이터 저장됨.
+            requestBoxOffice(date: searchBar.text!)
+            print("Network Request")
         } else {
-            tvcell.titleLabel.text = //검색기록 있으면 realm데이터 로드
+            list.removeAll()
+            for i in dailyBoxOfficeArray { //검색기록 있으면 네트워크요청하지 않고 기존 list데이터 삭제한뒤 realm데이터를 list에 넣어서 불러오기
+                list.append(BoxOfficeModel(movieTitle: i.movieName, releaseDate: i.openDate, totalCount: i.audienceAcc))
+                print("No Network Request")
+            }
         }
     }
 }
